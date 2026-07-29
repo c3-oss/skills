@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "c3-skills",
+  "description": "Agent skills for Claude Code.",
+  "owner": { "name": "Caian R. Ertl", "url": "https://github.com/c3-oss" },
+  "plugins": [
+    {
+      "name": "skills",
+      "source": { "source": "github", "repo": "c3-oss/skills" },
+      "description": "Agent skills for Claude Code, including Codex CLI delegation and orchestration.",
+      "homepage": "https://github.com/c3-oss/skills",
+      "license": "CC0-1.0",
+      "keywords": ["skills", "claude-code", "codex", "delegation", "orchestration"]
+    }
+  ]
+}
