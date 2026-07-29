@@ -15,7 +15,7 @@ Or add the Claude Code plugin marketplace:
 
 ```text
 /plugin marketplace add c3-oss/skills
-/plugin install skills@c3-skills
+/plugin install c3-oss-skills@c3-oss
 ```
 
 ## Skills

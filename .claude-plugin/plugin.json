@@ -1,5 +1,5 @@
 {
-  "name": "skills",
+  "name": "c3-oss-skills",
   "description": "Agent skills for Claude Code, including Codex CLI delegation and orchestration.",
   "author": { "name": "Caian R. Ertl" },
   "homepage": "https://github.com/c3-oss/skills",

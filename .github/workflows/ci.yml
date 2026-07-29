@@ -152,7 +152,7 @@ jobs:
         run: claude plugin marketplace list
 
       - name: Install plugin
-        run: claude plugin install skills@c3-skills --scope user
+        run: claude plugin install c3-oss-skills@c3-oss --scope user
 
       - name: List skills with the skills CLI
         run: npx -y skills add ./ --list
