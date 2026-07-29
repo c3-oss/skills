@@ -5,8 +5,15 @@ The command forms and behavior in this reference were tested with Codex CLI
 
 ## Canonical command
 
+`CODEX_HOME` is resolved once, before the first invocation: a store the user
+names explicitly wins, then a `CODEX_HOME` already set in the environment,
+then the `$HOME/.codex` default. The `${CODEX_HOME:-$HOME/.codex}` form below
+encodes the environment-then-default part of that order; a user-named store
+replaces it outright. Every invocation, retry, and resume carries the same
+resolved value.
+
 ```sh
-CODEX_HOME="$HOME/.codex" codex exec \
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}" codex exec \
   -C <working-directory> \
   -s <read-only|danger-full-access> \
   -m gpt-5.6-sol \
@@ -24,7 +31,7 @@ Use one isolated working directory and one complete artifact set per lane.
 
 | Input | Why it is present |
 | --- | --- |
-| `CODEX_HOME="$HOME/.codex"` | Selects the account, configuration, limits, and session store explicitly. The surrounding environment can point at another account. Use the same value for every retry and resume. |
+| `CODEX_HOME=...` | Selects the account, configuration, limits, and session store explicitly, using the resolved value: user choice, then the environment value, then `$HOME/.codex`. Confirm the resolved store with a smoke before fan-out, and use the same value for every retry and resume. |
 | `codex exec` | Runs Codex as an external, non-interactive process. Each invocation is an independent process. |
 | `-C <working-directory>` | Sets the agent's working directory. Give every writing lane its own Git worktree. |
 | `-s read-only` | Constrains evidence-only validators that need no writes. Verify it with a real shell-command smoke because nested `bwrap` can fail. |
@@ -117,7 +124,7 @@ with its lane and `CODEX_HOME`, then persist it immediately.
 Resume with a prompt file:
 
 ```sh
-CODEX_HOME="$HOME/.codex" codex exec resume <thread_id> \
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}" codex exec resume <thread_id> \
   -m gpt-5.6-sol \
   -c model_reasoning_effort="xhigh" \
   -c sandbox_mode="danger-full-access" \

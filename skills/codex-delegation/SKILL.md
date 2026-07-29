@@ -33,10 +33,18 @@ See [Invocation details](references/invocation.md) for session and event semanti
 
 ## Invocation contract
 
+Resolve `CODEX_HOME` once, before the first invocation, in this order:
+
+1. a store the user names explicitly ("use CODEX_HOME X");
+2. a `CODEX_HOME` already set in the environment;
+3. the `$HOME/.codex` default.
+
+Pass the resolved value explicitly in every invocation, retry, and resume.
+
 Use this command shape:
 
 ```sh
-CODEX_HOME="$HOME/.codex" codex exec \
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}" codex exec \
   -C <working-directory> \
   -s <read-only|danger-full-access> \
   -m gpt-5.6-sol \
@@ -50,7 +58,7 @@ CODEX_HOME="$HOME/.codex" codex exec \
 
 | Input | Purpose |
 | --- | --- |
-| `CODEX_HOME` | Select the account, config, sessions, and usage limits explicitly. |
+| `CODEX_HOME` | Select the account, config, sessions, and usage limits explicitly, using the resolved value (user choice, then environment, then `$HOME/.codex`). |
 | `-C` | Set the lane's working directory. |
 | `-s` | Select `read-only` for observation or `danger-full-access` for commits and self-investigation. |
 | `-m` | Select `gpt-5.6-sol`. |
@@ -211,7 +219,8 @@ See [Orchestration patterns](references/patterns.md) for the complete layout.
 ## Checklist
 
 ```text
-[ ] CODEX_HOME is explicit in every invocation and retry
+[ ] CODEX_HOME is resolved once (user choice > environment > ~/.codex)
+[ ] The resolved CODEX_HOME is explicit in every invocation and retry
 [ ] Account is confirmed through auth.json and a successful same-home resume
 [ ] Every CODEX_HOME passed an --ephemeral smoke with a real shell command
 [ ] Trivial, read-only schema, and isolated commit smokes passed
