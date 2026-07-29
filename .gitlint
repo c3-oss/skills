@@ -1,0 +1,15 @@
+[general]
+contrib = contrib-title-conventional-commits
+regex-style-search = True
+
+# Dependabot commit bodies are machine-generated and routinely exceed the
+# body line-length limit (B1); skip all rules for its authored commits.
+[ignore-by-author-name]
+regex = .*dependabot.*
+ignore = all
+
+[contrib-title-conventional-commits]
+types = build,chore,ci,docs,feat,fix,perf,refactor,revert,style,test
+
+[title-match-regex]
+regex = ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\((ci|config|deps|devbox|docs|github|hooks|skills)\)!?: .+

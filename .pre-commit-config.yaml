@@ -1,0 +1,31 @@
+fail_fast: true
+
+repos:
+  - repo: local
+    hooks:
+      - id: gitlint
+        name: Gitlint commit message
+        entry: uv run gitlint --msg-filename
+        language: system
+        stages: [commit-msg]
+
+      - id: markdownlint
+        name: Markdownlint
+        entry: bash -c 'git ls-files -z -- "*.md" | xargs -0 markdownlint-cli2 --no-globs'
+        language: system
+        pass_filenames: false
+        stages: [pre-commit, pre-merge-commit]
+
+      - id: mermaid-validate
+        name: Mermaid diagram syntax
+        entry: bash -c 'git ls-files -z -- "*.md" | xargs -0 node tools/validate-mermaid.mjs'
+        language: system
+        pass_filenames: false
+        stages: [pre-commit, pre-merge-commit]
+
+      - id: lychee
+        name: Lychee link check
+        entry: bash -c 'git ls-files -z -- "*.md" | xargs -0 lychee --no-progress --verbose'
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

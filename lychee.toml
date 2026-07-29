@@ -1,0 +1,14 @@
+# Lychee link checker config. See https://lychee.cli.rs/usage/config/
+#
+# Caching avoids re-verifying every link on every run: lychee writes results
+# to .lycheecache, and CI persists that file across runs via actions/cache
+# (see .github/workflows/ci.yml). Entries older than max_cache_age are
+# re-checked, so links are still validated over time.
+cache = true
+max_cache_age = "14d"
+no_progress = true
+accept = [200, 206, 429]
+# Never cache failed checks (auth / not-found / timeouts / rate limits) so they
+# are always re-verified. A fixed token or a transient blip then takes effect on
+# the next run instead of being masked by a stale cached error.
+cache_exclude_status = "401, 403, 404, 408, 429, 500, 502, 503, 504"
