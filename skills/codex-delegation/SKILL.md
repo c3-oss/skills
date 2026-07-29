@@ -49,7 +49,7 @@ CODEX_HOME="$HOME/.codex" codex exec \
 ```
 
 | Input | Purpose |
-|---|---|
+| --- | --- |
 | `CODEX_HOME` | Select the account, config, sessions, and usage limits explicitly. |
 | `-C` | Set the lane's working directory. |
 | `-s` | Select `read-only` for observation or `danger-full-access` for commits and self-investigation. |
@@ -73,9 +73,9 @@ Run pre-flight checks before every fan-out and for every `CODEX_HOME`.
 2. Run a read-only `--ephemeral` invocation with the production schema.
 3. Require a real shell command such as:
 
-```sh
-head -1 /etc/hostname
-```
+   ```sh
+   head -1 /etc/hostname
+   ```
 
 4. Validate the command result, not only a schema-valid response.
 5. Run an isolated `--ephemeral` worktree write and commit for implementation.
@@ -166,7 +166,7 @@ traceable fix rounds.
 ## Sandbox, effort, and tier selection
 
 | Role | Effort and tier | Sandbox and evidence | Rationale |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Adversarial evidence validator | `xhigh` + `fast` | `read-only`; evidence inline | Produces a decorrelated critique without tool access. |
 | Second technical reviewer with web research | `xhigh` + `fast` | `danger-full-access`; `tools.web_search=true` | Uses shell and primary-source web research for independent verification. |
 | Mass triage | `high` + `fast` | `danger-full-access`; read-only prompt contract | Optimizes mechanical breadth while allowing read-only `gh` investigation. |

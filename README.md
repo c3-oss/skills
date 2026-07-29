@@ -21,7 +21,7 @@ Or add the Claude Code plugin marketplace:
 ## Skills
 
 | Skill | Description |
-|---|---|
+| --- | --- |
 | `codex-delegation` | Delegate implementation, review, validation, and mass triage to GPT models through the Codex CLI. |
 
 ## License

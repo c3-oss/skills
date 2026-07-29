@@ -23,7 +23,7 @@ Use one isolated working directory and one complete artifact set per lane.
 ## Flag-by-flag contract
 
 | Input | Why it is present |
-|---|---|
+| --- | --- |
 | `CODEX_HOME="$HOME/.codex"` | Selects the account, configuration, limits, and session store explicitly. The surrounding environment can point at another account. Use the same value for every retry and resume. |
 | `codex exec` | Runs Codex as an external, non-interactive process. Each invocation is an independent process. |
 | `-C <working-directory>` | Sets the agent's working directory. Give every writing lane its own Git worktree. |
@@ -168,9 +168,9 @@ Smoke every `CODEX_HOME` before fan-out. Exercise:
 2. a read-only invocation with the production schema;
 3. a real shell command:
 
-```sh
-head -1 /etc/hostname
-```
+   ```sh
+   head -1 /etc/hostname
+   ```
 
 4. an isolated worktree write and commit for implementation lanes.
 
@@ -183,7 +183,7 @@ fails.
 Read `events.jsonl` line by line as JSON. At minimum, handle:
 
 | Event | Action |
-|---|---|
+| --- | --- |
 | `thread.started` | Extract `thread_id` and persist it immediately with the lane and `CODEX_HOME`. |
 | `agent_message` | Test the message against the lane schema and expected item IDs. Retain the last complete schema-valid candidate. |
 | `turn.completed` | Record the reported token `usage`. |
