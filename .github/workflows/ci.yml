@@ -3,16 +3,14 @@ name: CI
 on:
   pull_request:
     branches: [master]
-  push:
-    branches: [master]
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: true
 
 jobs:
   quality:
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 10
 
     permissions:
@@ -76,31 +74,14 @@ jobs:
         run: devbox run -- pre-commit validate-config
 
       - name: Lint commit messages
-        # Only meaningful on PRs (the pre-merge gate) and on pushes to the
-        # default branch (catch what actually lands on master). Skip on
-        # feature/dependabot branch pushes, where github.event.before is
-        # unreliable — it is all-zeros on branch creation and an orphaned SHA
-        # after a rebase/force-push, which makes the before..sha range lint
-        # unrelated history or crash with "Invalid revision range".
-        if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Compare against the freshly fetched base tip (FETCH_HEAD). The
-            # origin/<base> remote-tracking ref is unreliable on a PR checkout
-            # and can point at an old commit, which would lint the whole
-            # history instead of just this PR's commits.
-            git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}"
-            commit_range="FETCH_HEAD..HEAD"
-          elif [[ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]] ||
-               ! git cat-file -e "${{ github.event.before }}" 2>/dev/null; then
-            # Branch creation or a force-push that orphaned the previous tip:
-            # lint only the pushed head.
-            commit_range="${{ github.sha }}"
-          else
-            commit_range="${{ github.event.before }}..${{ github.sha }}"
-          fi
-          devbox run -- uv run gitlint --commits "$commit_range"
+          # Compare against the freshly fetched base tip (FETCH_HEAD). The
+          # origin/<base> remote-tracking ref is unreliable on a PR checkout
+          # and can point at an old commit, which would lint the whole
+          # history instead of just this PR's commits.
+          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}"
+          devbox run -- uv run gitlint --commits "FETCH_HEAD..HEAD"
 
       - name: Run pre-commit quality gates
         run: devbox run -- pre-commit run --hook-stage pre-commit --all-files
@@ -112,7 +93,7 @@ jobs:
 
   validate-plugin:
     name: Validate plugin structure
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 10
 
     permissions:
@@ -129,7 +110,7 @@ jobs:
 
   test-install:
     name: Test skill installation
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: validate-plugin
 
