@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Cache uv dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/uv
           key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
@@ -38,7 +38,7 @@ jobs:
           devbox-version: 0.17.4
 
       - name: Cache pre-commit environments
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
@@ -46,7 +46,7 @@ jobs:
             pre-commit-${{ runner.os }}-
 
       - name: Cache pnpm store
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           # pnpm's default store on Linux (XDG). Hardcoded rather than resolved
           # via `pnpm store path`, whose output devbox interleaves with its own
@@ -57,7 +57,7 @@ jobs:
             pnpm-${{ runner.os }}-
 
       - name: Cache lychee link checker
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .lycheecache
           key: lychee-${{ runner.os }}-${{ hashFiles('**/*.md') }}
