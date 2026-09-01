@@ -10,5 +10,5 @@ package = false
 [dependency-groups]
 dev = [
   "gitlint>=0.19.1",
-  "pre-commit>=4.6.0",
+  "pre-commit>=4.6.2",
 ]
