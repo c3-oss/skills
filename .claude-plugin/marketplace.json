@@ -7,10 +7,10 @@
     {
       "name": "c3-oss-skills",
       "source": { "source": "github", "repo": "c3-oss/skills" },
-      "description": "Agent skills for Claude Code, including Codex CLI delegation and orchestration.",
+      "description": "Agent skills for Claude Code, including Codex CLI and Grok Build CLI delegation and orchestration.",
       "homepage": "https://github.com/c3-oss/skills",
       "license": "CC0-1.0",
-      "keywords": ["skills", "claude-code", "codex", "delegation", "orchestration"]
+      "keywords": ["skills", "claude-code", "codex", "grok", "delegation", "orchestration"]
     }
   ]
 }
